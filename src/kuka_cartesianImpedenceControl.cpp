@@ -110,7 +110,7 @@ main
         float * msrdJacobianVector;
         Eigen::VectorXf screwError(FRI_CART_VEC), desScrewError(FRI_CART_VEC), screwErrorPrev(FRI_CART_VEC), relativeScrewError(FRI_CART_VEC),
                         desTwistError(FRI_CART_VEC), twistError(FRI_CART_VEC);
-        Eigen::VectorXf msrdCartScrew(FRI_CART_VEC), desCartScrew(FRI_CART_VEC);                
+        Eigen::VectorXf msrdCartScrew(FRI_CART_VEC), desCartScrew(FRI_CART_VEC), nextDesCartScrew(FRI_CART_VEC);                
         measToWorldRotation.setZero(FRI_CART_VEC, FRI_CART_VEC);
         screwError.setZero(FRI_CART_VEC);
         twistError.setZero(FRI_CART_VEC);
@@ -178,6 +178,7 @@ main
         logger->createMatrixVariable("nextDesiredAffine", 4, 4);
         logger->createMatrixVariable("msrdCartAffine", 4, 4);
         logger->createVectorVariable("desCartScrew", FRI_CART_VEC);
+        logger->createVectorVariable("nextDesCartScrew", FRI_CART_VEC);
         logger->createVectorVariable("msrdCartScrew", FRI_CART_VEC);
         logger->createVectorVariable("desiredForce", FRI_CART_VEC);
         logger->createVectorVariable("estExtCartForce", FRI_CART_VEC);
@@ -331,7 +332,9 @@ main
                        logger->add("nextDesiredAffine", nextDesiredAffine.matrix());
 //                        cout << "Next desired affine transformed wrt world frame: \n" << nextDesiredAffine.matrix() << endl;
                        desCartScrew = utils::getScrewFromAffine(desCartAffine);
+                       nextDesCartScrew = utils::getScrewFromAffine(nextDesiredAffine);
                        logger->add("desCartScrew", desCartScrew);
+                       logger->add("nextDesCartScrew", nextDesCartScrew);
 
                         // Compute position and orientation error
                        relativeScrewError = utils::getScrewErrorFromAffine(msrdCartAffine, nextDesiredAffine);
