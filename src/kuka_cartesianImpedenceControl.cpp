@@ -99,8 +99,8 @@ main
         Eigen::Matrix3f desRotation;
                         desRotation.setIdentity(3,3);
 //                         desRotation << 0.7071068,-0.7071068, 0.,
-                                       0.7071068, 0.7071068, 0.,
-                                               0.,       0., 1.;
+//                                        0.7071068, 0.7071068, 0.,
+//                                                0.,       0., 1.;
         Eigen::Vector3f desTranslation;
         desTranslation.setZero(3);
 //         desTranslation << 0., 0.2, 0.;
